@@ -1,0 +1,7 @@
+.venv/
+data/
+output/
+.ipynb_checkpoints/
+spark-warehouse/
+metastore_db/
+derby.log
