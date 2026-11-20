@@ -7802,7 +7802,7 @@ a.anchor-link {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h1 id="Citi-Bike-NYC-%E2%80%94-PySpark-Data-Processing-Pipeline">Citi Bike NYC — PySpark Data Processing Pipeline<a class="anchor-link" href="#Citi-Bike-NYC-%E2%80%94-PySpark-Data-Processing-Pipeline">¶</a></h1><p><strong>IDS706 PySpark Assignment</strong></p>
+<h1 id="Citi-Bike-NYC:-PySpark-Data-Processing-Pipeline">Citi Bike NYC: PySpark Data Processing Pipeline<a class="anchor-link" href="#Citi-Bike-NYC:-PySpark-Data-Processing-Pipeline">¶</a></h1><p><strong>IDS706 PySpark Assignment</strong></p>
 <p>This notebook builds a distributed data pipeline on <strong>~2.6 GB of Citi Bike NYC trip data (2024)</strong> joined with <strong>NOAA daily weather (Central Park)</strong>, and analyzes how Spark optimizes it.</p>
 <table>
 <thead>
@@ -7912,14 +7912,14 @@ a.anchor-link {
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
 <pre>WARNING: Using incubator modules: jdk.incubator.vector
 Using Spark's default log4j profile: org/apache/spark/log4j2-defaults.properties
-26/11/19 11:26:23 WARN Utils: Your hostname, zhangqianchundeMacBook-Pro.local, resolves to a loopback address: 127.0.0.1; using 172.20.4.149 instead (on interface en0)
-26/11/19 11:26:23 WARN Utils: Set SPARK_LOCAL_IP if you need to bind to another address
+26/11/20 12:04:49 WARN Utils: Your hostname, zhangqianchundeMacBook-Pro.local, resolves to a loopback address: 127.0.0.1; using 172.20.4.149 instead (on interface en0)
+26/11/20 12:04:49 WARN Utils: Set SPARK_LOCAL_IP if you need to bind to another address
 Using Spark's default log4j profile: org/apache/spark/log4j2-defaults.properties
 Setting default log level to "WARN".
 To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
 /Users/zhangqianchun/pyspark-citibike/.venv/lib/python3.15/site-packages/pyspark/testing/utils.py:127: FutureWarning: PySpark does not yet fully support pandas &gt;= 3.0.0. Some features may not work correctly. It is recommended to use pandas &lt; 3.0.0 for now.
   require_minimum_pandas_version()
-26/11/19 11:26:24 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+26/11/20 12:04:50 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
 </pre>
 </div>
 </div>
@@ -8011,7 +8011,7 @@ Spark UI: http://172.20.4.149:4040
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
-<pre>26/11/19 11:26:25 WARN FileStreamSink: Assume no metadata directory. Error while looking for metadata directory in the path: ../data/raw/*.csv.
+<pre>26/11/20 12:04:53 WARN FileStreamSink: Assume no metadata directory. Error while looking for metadata directory in the path: ../data/raw/*.csv.
 java.io.FileNotFoundException: File ../data/raw/*.csv does not exist
 	at org.apache.hadoop.fs.RawLocalFileSystem.deprecatedGetFileStatus(RawLocalFileSystem.java:980)
 	at org.apache.hadoop.fs.RawLocalFileSystem.getFileLinkStatusInternal(RawLocalFileSystem.java:1301)
@@ -8093,6 +8093,7 @@ java.io.FileNotFoundException: File ../data/raw/*.csv does not exist
 	at org.apache.spark.sql.classic.DataFrameReader.load(DataFrameReader.scala:59)
 	at org.apache.spark.sql.DataFrameReader.csv(DataFrameReader.scala:392)
 	at org.apache.spark.sql.classic.DataFrameReader.csv(DataFrameReader.scala:266)
+	at org.apache.spark.sql.classic.DataFrameReader.csv(DataFrameReader.scala:59)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
 	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
@@ -8105,13 +8106,13 @@ java.io.FileNotFoundException: File ../data/raw/*.csv does not exist
 	at py4j.ClientServerConnection.waitForCommands(ClientServerConnection.java:184)
 	at py4j.ClientServerConnection.run(ClientServerConnection.java:108)
 	at java.base/java.lang.Thread.run(Thread.java:840)
-[Stage 0:======================================&gt;                  (15 + 7) / 22]</pre>
+                                                                                </pre>
 </div>
 </div>
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>Count rows from raw CSV: 2.43s
+<pre>Count rows from raw CSV: 3.12s
 Rows: 14,110,047
 root
  |-- ride_id: string (nullable = true)
@@ -8137,12 +8138,6 @@ root
 +----------------+-------------+-----------------------+-----------------------+------------------+----------------+-----------------------+--------------+-----------+------------+-----------------+------------------+-------------+
 only showing top 3 rows
 </pre>
-</div>
-</div>
-<div class="jp-OutputArea-child">
-<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
-<pre>                                                                                </pre>
 </div>
 </div>
 </div>
@@ -8191,7 +8186,7 @@ only showing top 3 rows
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>Write Parquet: 17.96s
+<pre>Write Parquet: 27.43s
 </pre>
 </div>
 </div>
@@ -8227,8 +8222,8 @@ only showing top 3 rows
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>Count rows from Parquet: 0.18s
-Rows: 14,110,047  |  CSV count 2.43s vs Parquet count 0.18s
+<pre>Count rows from Parquet: 0.50s
+Rows: 14,110,047  |  CSV count 3.12s vs Parquet count 0.50s
 Months available: ['2024-05', '2024-06', '2024-07', '2024-08']
 </pre>
 </div>
@@ -8397,7 +8392,7 @@ only showing top 5 rows
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>Count cleaned + enriched trips: 1.86s
+<pre>Count cleaned + enriched trips: 4.33s
 Kept 14,046,688 of 14,110,047 rows (99.6%)
 </pre>
 </div>
@@ -8488,7 +8483,7 @@ only showing top 10 rows
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
-<pre>[Stage 34:&gt;                                                       (0 + 10) / 12]</pre>
+<pre>[Stage 34:===================================================&gt;    (11 + 1) / 12]</pre>
 </div>
 </div>
 <div class="jp-OutputArea-child">
@@ -8583,7 +8578,7 @@ only showing top 5 rows
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
-<pre>[Stage 38:&gt;                                                       (0 + 10) / 12]</pre>
+<pre>[Stage 38:===================================================&gt;    (11 + 1) / 12]</pre>
 </div>
 </div>
 <div class="jp-OutputArea-child">
@@ -8657,7 +8652,7 @@ only showing top 5 rows
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
-<pre>[Stage 42:&gt;                                                       (0 + 10) / 12]</pre>
+<pre>[Stage 42:===================================================&gt;    (11 + 1) / 12]</pre>
 </div>
 </div>
 <div class="jp-OutputArea-child">
@@ -8804,7 +8799,7 @@ only showing top 5 rows
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>Write station_hour: 2.95s
+<pre>Write station_hour: 3.02s
 </pre>
 </div>
 </div>
@@ -8817,28 +8812,22 @@ only showing top 5 rows
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>Write daily: 2.32s
+<pre>Write daily: 1.74s
 </pre>
 </div>
 </div>
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
-<pre>[Stage 92:===================================================&gt;    (11 + 1) / 12]</pre>
+<pre>                                                                                </pre>
 </div>
 </div>
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>Write SQL results: 7.12s
+<pre>Write SQL results: 6.09s
 Read back: 101403 station-hour rows
 </pre>
-</div>
-</div>
-<div class="jp-OutputArea-child">
-<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
-<pre>                                                                                </pre>
 </div>
 </div>
 </div>
@@ -8988,7 +8977,7 @@ Arguments: isFinalPlan=false
 <div class="jp-InputPrompt jp-InputArea-prompt">In [16]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="n">one_month</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">ym</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">trips</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">"ym"</span><span class="p">)</span><span class="o">.</span><span class="n">distinct</span><span class="p">()</span><span class="o">.</span><span class="n">collect</span><span class="p">())[</span><span class="mi">0</span><span class="p">]</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="n">one_month</span> <span class="o">=</span> <span class="s2">"2024-07"</span>
 <span class="n">pruned</span> <span class="o">=</span> <span class="n">trips</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">F</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s2">"ym"</span><span class="p">)</span> <span class="o">==</span> <span class="n">one_month</span><span class="p">)</span><span class="o">.</span><span class="n">groupBy</span><span class="p">(</span><span class="s2">"member_casual"</span><span class="p">)</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
 <span class="n">pruned</span><span class="o">.</span><span class="n">explain</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s2">"formatted"</span><span class="p">)</span>
 <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">timed</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Count trips in </span><span class="si">{</span><span class="n">one_month</span><span class="si">}</span><span class="s2"> only (partition pruning)"</span><span class="p">,</span> <span class="n">pruned</span><span class="o">.</span><span class="n">collect</span><span class="p">)</span>
@@ -9017,7 +9006,7 @@ AdaptiveSparkPlan (6)
 Output [2]: [member_casual#113, ym#114]
 Batched: true
 Location: InMemoryFileIndex [file:/Users/zhangqianchun/pyspark-citibike/data/parquet/trips]
-PartitionFilters: [isnotnull(ym#114), (ym#114 = 2024-05)]
+PartitionFilters: [isnotnull(ym#114), (ym#114 = 2024-07)]
 ReadSchema: struct&lt;member_casual:string&gt;
 
 (2) Project
@@ -9033,7 +9022,7 @@ Results [2]: [member_casual#113, count#953L]
 
 (4) Exchange
 Input [2]: [member_casual#113, count#953L]
-Arguments: hashpartitioning(member_casual#113, 16), ENSURE_REQUIREMENTS, [plan_id=3422]
+Arguments: hashpartitioning(member_casual#113, 16), ENSURE_REQUIREMENTS, [plan_id=3377]
 
 (5) HashAggregate
 Input [2]: [member_casual#113, count#953L]
@@ -9047,7 +9036,7 @@ Output [2]: [member_casual#113, count#936L]
 Arguments: isFinalPlan=false
 
 
-Count trips in 2024-05 only (partition pruning): 0.07s
+Count trips in 2024-07 only (partition pruning): 0.19s
 </pre>
 </div>
 </div>
@@ -9144,7 +9133,7 @@ Input [2]: [started_at#14, start_station_name#4]
 
 (5) Exchange
 Input [3]: [started_at#14, start_station_name#4, date#954]
-Arguments: hashpartitioning(date#954, 16), ENSURE_REQUIREMENTS, [plan_id=3498]
+Arguments: hashpartitioning(date#954, 16), ENSURE_REQUIREMENTS, [plan_id=3453]
 
 (6) Sort
 Input [3]: [started_at#14, start_station_name#4, date#954]
@@ -9167,7 +9156,7 @@ Input [1]: [DATE#152]
 
 (10) Exchange
 Input [1]: [date#158]
-Arguments: hashpartitioning(date#158, 16), ENSURE_REQUIREMENTS, [plan_id=3499]
+Arguments: hashpartitioning(date#158, 16), ENSURE_REQUIREMENTS, [plan_id=3454]
 
 (11) Sort
 Input [1]: [date#158]
@@ -9192,7 +9181,7 @@ Results [4]: [start_station_name#4, hour#956, is_weekend#957, count#982L]
 
 (15) Exchange
 Input [4]: [start_station_name#4, hour#956, is_weekend#957, count#982L]
-Arguments: hashpartitioning(start_station_name#4, hour#956, is_weekend#957, 16), ENSURE_REQUIREMENTS, [plan_id=3506]
+Arguments: hashpartitioning(start_station_name#4, hour#956, is_weekend#957, 16), ENSURE_REQUIREMENTS, [plan_id=3461]
 
 (16) HashAggregate
 Input [4]: [start_station_name#4, hour#956, is_weekend#957, count#982L]
@@ -9212,20 +9201,14 @@ Arguments: isFinalPlan=false
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
-<pre>[Stage 119:====================================&gt;                   (9 + 5) / 14]</pre>
+<pre>                                                                                </pre>
 </div>
 </div>
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>NAIVE pipeline: 14.91s
+<pre>NAIVE pipeline: 9.33s
 </pre>
-</div>
-</div>
-<div class="jp-OutputArea-child">
-<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
-<pre>                                                                                </pre>
 </div>
 </div>
 </div>
@@ -9259,8 +9242,8 @@ Arguments: isFinalPlan=false
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>OPTIMIZED pipeline: 2.02s
-Speed-up: 7.4x
+<pre>OPTIMIZED pipeline: 2.91s
+Speed-up: 3.2x
 </pre>
 </div>
 </div>
@@ -9316,7 +9299,7 @@ Speed-up: 7.4x
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>No cache  - action 1 (count): 1.24s
+<pre>No cache  - action 1 (count): 1.76s
 </pre>
 </div>
 </div>
@@ -9329,7 +9312,7 @@ Speed-up: 7.4x
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>No cache  - action 2 (avg duration by type): 1.16s
+<pre>No cache  - action 2 (avg duration by type): 1.93s
 </pre>
 </div>
 </div>
@@ -9342,13 +9325,19 @@ Speed-up: 7.4x
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>Cache     - materialize (count): 6.97s
-Cache     - action 1 (count): 0.04s
-Cache     - action 2 (avg duration by type): 0.56s
+<pre>Cache     - materialize (count): 14.60s
+Cache     - action 1 (count): 0.06s
+Cache     - action 2 (avg duration by type): 0.79s
 
-Repeated count: 1.24s -&gt; 0.04s  (28.1x faster)
-Repeated aggregation: 1.16s -&gt; 0.56s  (2.1x faster)
+Repeated count: 1.76s -&gt; 0.06s  (28.3x faster)
+Repeated aggregation: 1.93s -&gt; 0.79s  (2.4x faster)
 </pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
+<pre>                                                                                </pre>
 </div>
 </div>
 </div>
@@ -9379,7 +9368,7 @@ Repeated aggregation: 1.16s -&gt; 0.56s  (2.1x faster)
 <pre>== Physical Plan ==
 AdaptiveSparkPlan isFinalPlan=false
 +- HashAggregate(keys=[rideable_type#102], functions=[count(1)])
-   +- Exchange hashpartitioning(rideable_type#102, 16), ENSURE_REQUIREMENTS, [plan_id=4356]
+   +- Exchange hashpartitioning(rideable_type#102, 16), ENSURE_REQUIREMENTS, [plan_id=4311]
       +- HashAggregate(keys=[rideable_type#102], functions=[partial_count(1)])
          +- InMemoryTableScan [rideable_type#102]
                +- InMemoryRelation [date#195, rideable_type#102, started_at#103, ended_at#104, start_station_name#105, end_station_name#107, start_lat#109, start_lng#110, end_lat#111, end_lng#112, member_casual#113, ym#114, duration_min#194, hour#196, day_of_week#197, is_weekend#198, distance_km#199, precip_in#159, tmax_f#160, tmin_f#161, wind_mph#162, is_rainy#200], StorageLevel(disk, memory, deserialized, 1 replicas)
@@ -9393,7 +9382,7 @@ AdaptiveSparkPlan isFinalPlan=false
                                  :     +- *(2) ColumnarToRow
                                  :        +- FileScan parquet [rideable_type#102,started_at#103,ended_at#104,start_station_name#105,end_station_name#107,start_lat#109,start_lng#110,end_lat#111,end_lng#112,member_casual#113,ym#114] Batched: true, DataFilters: [isnotnull(start_lat#109), isnotnull(start_lng#110), isnotnull(start_station_name#105), isnotnull..., Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/Users/zhangqianchun/pyspark-citibike/data/parquet/trips], PartitionFilters: [], PushedFilters: [IsNotNull(start_lat), IsNotNull(start_lng), IsNotNull(start_station_name), IsNotNull(end_station..., ReadSchema: struct&lt;rideable_type:string,started_at:timestamp,ended_at:timestamp,start_station_name:string,end...
                                  +- BroadcastQueryStage 0
-                                    +- BroadcastExchange HashedRelationBroadcastMode(List(input[0, date, true]),false), [plan_id=4178]
+                                    +- BroadcastExchange HashedRelationBroadcastMode(List(input[0, date, true]),false), [plan_id=4133]
                                        +- *(1) Project [DATE#152 AS date#158, PRCP#154 AS precip_in#159, cast(TMAX#156 as double) AS tmax_f#160, cast(TMIN#157 as double) AS tmin_f#161, AWND#153 AS wind_mph#162]
                                           +- *(1) Filter isnotnull(DATE#152)
                                              +- FileScan csv [DATE#152,AWND#153,PRCP#154,TMAX#156,TMIN#157] Batched: false, DataFilters: [isnotnull(DATE#152)], Format: CSV, Location: InMemoryFileIndex(1 paths)[file:/Users/zhangqianchun/pyspark-citibike/data/weather/nyc_weather_20..., PartitionFilters: [], PushedFilters: [IsNotNull(DATE)], ReadSchema: struct&lt;DATE:date,AWND:double,PRCP:double,TMAX:int,TMIN:int&gt;
@@ -9403,7 +9392,7 @@ AdaptiveSparkPlan isFinalPlan=false
                               :- Project [rideable_type#102, started_at#103, ended_at#104, start_station_name#105, end_station_name#107, start_lat#109, start_lng#110, end_lat#111, end_lng#112, member_casual#113, ym#114, (cast((unix_timestamp(ended_at#104, yyyy-MM-dd HH:mm:ss, Some(America/New_York), true) - unix_timestamp(started_at#103, yyyy-MM-dd HH:mm:ss, Some(America/New_York), true)) as double) / 60.0) AS duration_min#194, cast(started_at#103 as date) AS date#195, hour(started_at#103, Some(America/New_York)) AS hour#196, date_format(started_at#103, E, Some(America/New_York)) AS day_of_week#197, dayofweek(cast(started_at#103 as date)) IN (1,7) AS is_weekend#198, (ASIN(SQRT((POWER(SIN((RADIANS((end_lat#111 - start_lat#109)) / 2.0)), 2.0) + ((COS(RADIANS(start_lat#109)) * COS(RADIANS(end_lat#111))) * POWER(SIN((RADIANS((end_lng#112 - start_lng#110)) / 2.0)), 2.0))))) * 12742.0) AS distance_km#199]
                               :  +- Filter (((((((((((isnotnull(start_lat#109) AND isnotnull(start_lng#110)) AND isnotnull(start_station_name#105)) AND isnotnull(end_station_name#107)) AND isnotnull(end_lat#111)) AND isnotnull(end_lng#112)) AND (start_lat#109 &gt;= 40.4)) AND (start_lat#109 &lt;= 41.0)) AND (start_lng#110 &gt;= -74.3)) AND (start_lng#110 &lt;= -73.6)) AND ((cast((unix_timestamp(ended_at#104, yyyy-MM-dd HH:mm:ss, Some(America/New_York), true) - unix_timestamp(started_at#103, yyyy-MM-dd HH:mm:ss, Some(America/New_York), true)) as double) / 60.0) &gt;= 1.0)) AND ((cast((unix_timestamp(ended_at#104, yyyy-MM-dd HH:mm:ss, Some(America/New_York), true) - unix_timestamp(started_at#103, yyyy-MM-dd HH:mm:ss, Some(America/New_York), true)) as double) / 60.0) &lt;= 180.0))
                               :     +- FileScan parquet [rideable_type#102,started_at#103,ended_at#104,start_station_name#105,end_station_name#107,start_lat#109,start_lng#110,end_lat#111,end_lng#112,member_casual#113,ym#114] Batched: true, DataFilters: [isnotnull(start_lat#109), isnotnull(start_lng#110), isnotnull(start_station_name#105), isnotnull..., Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:/Users/zhangqianchun/pyspark-citibike/data/parquet/trips], PartitionFilters: [], PushedFilters: [IsNotNull(start_lat), IsNotNull(start_lng), IsNotNull(start_station_name), IsNotNull(end_station..., ReadSchema: struct&lt;rideable_type:string,started_at:timestamp,ended_at:timestamp,start_station_name:string,end...
-                              +- BroadcastExchange HashedRelationBroadcastMode(List(input[0, date, true]),false), [plan_id=4144]
+                              +- BroadcastExchange HashedRelationBroadcastMode(List(input[0, date, true]),false), [plan_id=4099]
                                  +- Project [DATE#152 AS date#158, PRCP#154 AS precip_in#159, cast(TMAX#156 as double) AS tmax_f#160, cast(TMIN#157 as double) AS tmin_f#161, AWND#153 AS wind_mph#162]
                                     +- Filter isnotnull(DATE#152)
                                        +- FileScan csv [DATE#152,AWND#153,PRCP#154,TMAX#156,TMIN#157] Batched: false, DataFilters: [isnotnull(DATE#152)], Format: CSV, Location: InMemoryFileIndex(1 paths)[file:/Users/zhangqianchun/pyspark-citibike/data/weather/nyc_weather_20..., PartitionFilters: [], PushedFilters: [IsNotNull(DATE)], ReadSchema: struct&lt;DATE:date,AWND:double,PRCP:double,TMAX:int,TMIN:int&gt;
@@ -9472,9 +9461,15 @@ AdaptiveSparkPlan isFinalPlan=false
 <div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
+<pre>[Stage 145:==================================================&gt;    (11 + 1) / 12]</pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>Transformations: 27.8 ms, Spark jobs launched = 0
-Action (count):  762.8 ms, Spark jobs launched = 3
+<pre>Transformations: 51.1 ms, Spark jobs launched = 0
+Action (count):  1083.5 ms, Spark jobs launched = 3
 Result: 2,157 stations with casual rides &gt; 30 min
 </pre>
 </div>
@@ -9514,7 +9509,7 @@ Result: 2,157 stations with casual rides &gt; 30 min
 == Physical Plan ==
 AdaptiveSparkPlan isFinalPlan=false
 +- HashAggregate(keys=[start_station_name#3262], functions=[avg(duration_min#3273)])
-   +- Exchange hashpartitioning(start_station_name#3262, 16), ENSURE_REQUIREMENTS, [plan_id=4485]
+   +- Exchange hashpartitioning(start_station_name#3262, 16), ENSURE_REQUIREMENTS, [plan_id=4440]
       +- HashAggregate(keys=[start_station_name#3262], functions=[partial_avg(duration_min#3273)])
          +- Project [start_station_name#3262, (cast((unix_timestamp(ended_at#3261, yyyy-MM-dd HH:mm:ss, Some(America/New_York), true) - unix_timestamp(started_at#3260, yyyy-MM-dd HH:mm:ss, Some(America/New_York), true)) as double) / 60.0) AS duration_min#3273]
             +- Filter ((isnotnull(member_casual#3270) AND (member_casual#3270 = casual)) AND ((cast((unix_timestamp(ended_at#3261, yyyy-MM-dd HH:mm:ss, Some(America/New_York), true) - unix_timestamp(started_at#3260, yyyy-MM-dd HH:mm:ss, Some(America/New_York), true)) as double) / 60.0) &gt; 30.0))
@@ -9584,7 +9579,7 @@ AdaptiveSparkPlan isFinalPlan=false
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
-<pre>26/11/19 11:27:41 WARN DAGScheduler: Broadcasting large task binary with size 1159.6 KiB
+<pre>26/11/20 12:06:30 WARN DAGScheduler: Broadcasting large task binary with size 1159.6 KiB
 </pre>
 </div>
 </div>

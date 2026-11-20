@@ -76,12 +76,12 @@ broadcast join ◄── weather (366 rows) ; withColumn is_rainy
 
 | Step | Time |
 |---|---|
-| Count rows from raw CSV | 2.43 s |
-| Convert CSV → Parquet (one-time) | 17.96 s |
-| Count rows from Parquet | 0.18 s (13× faster than CSV) |
-| Count trips in 2024-07 only (partition pruning) | 0.07 s |
-| **Naive pipeline** (CSV, no broadcast, join before filter) | **14.91 s** |
-| **Optimized pipeline** (Parquet, early filters, column pruning, broadcast join) | **2.02 s** (**7.4× faster**) |
+| Count rows from raw CSV | 3.12 s |
+| Convert CSV → Parquet (one-time) | 27.43 s |
+| Count rows from Parquet | 0.50 s (6× faster than CSV) |
+| Count trips in 2024-07 only (partition pruning) | 0.19 s |
+| **Naive pipeline** (CSV, no broadcast, join before filter) | **9.33 s** |
+| **Optimized pipeline** (Parquet, early filters, column pruning, broadcast join) | **2.91 s** (**3.2× faster**) |
 
 ### How Spark optimized the query
 
@@ -89,7 +89,7 @@ Every transformation in the notebook only builds a logical plan. Nothing runs un
 
 ### Bottlenecks and how the pipeline was optimized
 
-The naive version (§5.3, Spark UI DAG in `screenshots/spark_ui_query_naive.png`) shows where the cost comes from. Interestingly, even though the naive code joins *before* filtering, Catalyst still pushed the filters below the join (the `Filter` sits right after `Scan csv` in its plan). Filter ordering in the code matters less than expected, because the optimizer fixes it. The real cost comes from two other sources. First, **CSV parsing**: CSV is row-based text, so every query re-parses strings and casts timestamps, and this is also why the one-time Parquet conversion takes ~18 s. Second, **the shuffle join**: with broadcast disabled, Spark falls back to `SortMergeJoin`, which adds an `Exchange hashpartitioning(date, 16)` plus a `Sort` on *both* sides. That means shuffling and sorting all 14M trips just to attach one weather row per day. The optimized pipeline removes both. After that, the main remaining bottleneck is the unavoidable `Exchange` required by `groupBy`. Spark limits its cost with partial aggregation: the `HashAggregate → Exchange → HashAggregate` pattern pre-aggregates inside each partition, so the Spark UI shows only **901,383** partial rows crossing the shuffle in the optimized pipeline (1,063,218 in the naive one) instead of ~14M input rows (final result: 101,403 station-hour rows). We also lowered `spark.sql.shuffle.partitions` from the default 200 to 16, which avoids hundreds of tiny tasks on a single machine. Finally, we used an explicit schema instead of `inferSchema` to avoid one extra full pass over 2.6 GB, and `coalesce(1)` for small outputs to avoid writing many tiny files.
+The naive version (§5.3, Spark UI DAG in `screenshots/spark_ui_query_naive.png`) shows where the cost comes from. Interestingly, even though the naive code joins *before* filtering, Catalyst still pushed the filters below the join (the `Filter` sits right after `Scan csv` in its plan). Filter ordering in the code matters less than expected, because the optimizer fixes it. The real cost comes from two other sources. First, **CSV parsing**: CSV is row-based text, so every query re-parses strings and casts timestamps, and this is also why the one-time Parquet conversion takes ~27 s. Second, **the shuffle join**: with broadcast disabled, Spark falls back to `SortMergeJoin`, which adds an `Exchange hashpartitioning(date, 16)` plus a `Sort` on *both* sides. That means shuffling and sorting all 14M trips just to attach one weather row per day. The optimized pipeline removes both. After that, the main remaining bottleneck is the unavoidable `Exchange` required by `groupBy`. Spark limits its cost with partial aggregation: the `HashAggregate → Exchange → HashAggregate` pattern pre-aggregates inside each partition, so the Spark UI shows only **901,383** partial rows crossing the shuffle in the optimized pipeline (1,063,218 in the naive one) instead of ~14M input rows (final result: 101,403 station-hour rows). We also lowered `spark.sql.shuffle.partitions` from the default 200 to 16, which avoids hundreds of tiny tasks on a single machine. Finally, we used an explicit schema instead of `inferSchema` to avoid one extra full pass over 2.6 GB, and `coalesce(1)` for small outputs to avoid writing many tiny files.
 
 ### Caching (bonus)
 
@@ -97,11 +97,11 @@ The naive version (§5.3, Spark UI DAG in `screenshots/spark_ui_query_naive.png`
 
 | Action | No cache | Cached | Speed-up |
 |---|---|---|---|
-| `count()` | 1.24 s | 0.04 s | **28.1×** |
-| `groupBy(rideable_type).avg(duration)` | 1.16 s | 0.56 s | **2.1×** |
-| First action after `.cache()` (materialization) | – | 6.97 s | one-time cost |
+| `count()` | 1.76 s | 0.06 s | **28.3×** |
+| `groupBy(rideable_type).avg(duration)` | 1.93 s | 0.79 s | **2.4×** |
+| First action after `.cache()` (materialization) | – | 14.60 s | one-time cost |
 
-After caching, the plan starts from `InMemoryTableScan` / `InMemoryRelation` instead of `Scan parquet` (§6), and the Spark UI **Storage** tab shows the cached DataFrame: 12 partitions, 100% cached, **1,495.8 MiB in memory**, 0 B spilled to disk. Caching is not free: materializing it costs ~7 s, so it only pays off when a DataFrame is reused several times, as it is here (SQL views, aggregations, MLlib).
+After caching, the plan starts from `InMemoryTableScan` / `InMemoryRelation` instead of `Scan parquet` (§6), and the Spark UI **Storage** tab shows the cached DataFrame: 12 partitions, 100% cached, **1,495.8 MiB in memory**, 0 B spilled to disk. Caching is not free: materializing it costs ~15 s, so it only pays off when a DataFrame is reused several times, as it is here (SQL views, aggregations, MLlib).
 
 ---
 
@@ -111,8 +111,8 @@ Measured in §7 using Spark job groups and `statusTracker()`:
 
 | Step | Time | Spark jobs launched |
 |---|---|---|
-| 5 transformations (`filter`, `withColumn`, `filter`, `select`, `groupBy().agg()`) | 27.8 ms | **0** |
-| 1 action (`count()`) | 762.8 ms | **3** |
+| 5 transformations (`filter`, `withColumn`, `filter`, `select`, `groupBy().agg()`) | 51.1 ms | **0** |
+| 1 action (`count()`) | 1,083.5 ms | **3** |
 
 Transformations are lazy: they return a new `DataFrame` object (a plan) instantly and launch no jobs. `.explain()` can print the full plan even though nothing has run. The action `count()` triggers optimization and execution: scan, partial aggregation, shuffle, final aggregation.
 
